@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2016",
+    "jsx": "preserve",
+    "checkJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "Assets/*": ["src/assets/*"],
+      "Components/*": ["src/components/*"],
+      "Model/*": ["src/model/*"],
+      "Pages/*": ["src/pages/*"],
+      "Runtime/*": ["src/runtime/*"],
+      "Store/*": ["src/store/*"],
+      "Utils/*": ["src/utils/*"],
+    }
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}
