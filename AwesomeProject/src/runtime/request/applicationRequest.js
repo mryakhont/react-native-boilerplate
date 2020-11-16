@@ -1,6 +1,6 @@
-import {changeUrlParam} from 'Utils/object-utilities';
+import { changeUrlParam } from 'Utils/object-utilities';
 
-const ROOT_REQUEST = '';
+const ROOT_REQUEST = 'https://localhost:3001/';
 
 export async function get(url, data = undefined) {
   if (data !== undefined) {
@@ -49,9 +49,10 @@ export async function post(url, data) {
 
 function serialize(obj) {
   var str = [];
-  for (var p in obj)
+  for (var p in obj) {
     if (obj.hasOwnProperty(p)) {
       str.push(encodeURIComponent(p) + '=' + encodeURIComponent(obj[p]));
     }
+  }
   return str.join('&');
 }
