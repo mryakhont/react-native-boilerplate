@@ -1,6 +1,6 @@
 import { changeUrlParam } from 'Utils/object-utilities';
 
-const ROOT_REQUEST = 'https://localhost:3001/';
+const ROOT_REQUEST = 'https://0c1ebb88f6da.ngrok.io/';
 
 export async function get(url, data = undefined) {
   if (data !== undefined) {
@@ -29,6 +29,7 @@ export async function get(url, data = undefined) {
 }
 
 export async function post(url, data) {
+  console.log(ROOT_REQUEST + url)
   return await fetch(ROOT_REQUEST + url, {
     method: 'post',
     body: JSON.stringify(data),
@@ -38,6 +39,7 @@ export async function post(url, data) {
     },
   })
     .then((res) => {
+      console.log('hehe', res);
       if (res.ok === true) {
         return res.json();
       }
