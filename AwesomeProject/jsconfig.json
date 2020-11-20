@@ -8,8 +8,8 @@
     "paths": {
       "Assets/*": ["src/assets/*"],
       "Components/*": ["src/components/*"],
-      "Model/*": ["src/model/*"],
       "Pages/*": ["src/pages/*"],
+      "Routes/*": ["src/routes/*"],
       "Runtime/*": ["src/runtime/*"],
       "Store/*": ["src/store/*"],
       "Utils/*": ["src/utils/*"],
