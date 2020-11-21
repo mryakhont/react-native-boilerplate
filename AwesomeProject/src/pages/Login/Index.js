@@ -29,7 +29,11 @@ function Login(props) {
       <Button
         title="Login"
         onPress={() => {
-          props.authenticateUserAction({ email, password });
+          props.authenticateUserAction({
+            email,
+            password,
+            navigation: props.navigation,
+          });
         }}
       />
       <TouchableOpacity onPress={() => Linking.openURL('https://google.com')}>

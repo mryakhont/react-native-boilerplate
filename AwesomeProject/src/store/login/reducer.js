@@ -5,13 +5,13 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
-    console.log(action);
+  console.log(action);
   switch (action.type) {
     case actions.AUTHENTICATE_USER:
       return { ...state };
 
     case actions.AUTHENTICATE_USER_SUCCESS:
-      return { ...state };
+      return { ...state, isAuthenticated: true };
 
     case actions.AUTHENTICATE_USER_FAILED:
       return { ...state };

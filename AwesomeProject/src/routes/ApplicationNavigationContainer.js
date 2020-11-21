@@ -4,12 +4,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthenticatedRoutes } from 'Routes/settings/Authenticated.Routes';
 import { PublicRoutes } from 'Routes/settings/Public.Routes';
-import { navigationRef } from 'Routes/ExternalNavigation';
+import { readyForNavigation, navigationRef } from 'Routes/ExternalNavigation';
+import { useContactContext } from 'Runtime/context/contactContext';
 const Stack = createStackNavigator();
 
 const ApplicationNavigationContainer = () => {
   const authenticatedRoutes = AuthenticatedRoutes;
   const publicRoutes = PublicRoutes;
+
+  const contactContext = useContactContext();
 
   const generateRoutes = (routes) =>
     routes.map((r) => {
@@ -24,16 +27,22 @@ const ApplicationNavigationContainer = () => {
     });
 
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer>
       <Stack.Navigator
         initialRouteName={
           publicRoutes.find((r) => r.options.initialRoute === true).name
         }>
-        {generateRoutes(authenticatedRoutes)}
-        {generateRoutes(publicRoutes)}
+        {contactContext.authenticated !== true
+          ? false
+          : generateRoutes(authenticatedRoutes)}
+        {contactContext.authenticated === true
+          ? false
+          : generateRoutes(publicRoutes)}
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+
+const mapStateToProps = {};
 
 export default ApplicationNavigationContainer;

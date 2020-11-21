@@ -6,17 +6,16 @@ export function* watchLoginUser() {
   yield takeLatest(actions.AUTHENTICATE_USER, loginWithEmailPassword);
 }
 
-const loginWithEmailPasswordAsync = async ({ email, password }) =>
+const loginWithEmailPasswordAsync = async ({ email, password, navigation }) =>
   await post('api/users/authenticate', { email: email, password: password })
-    .then((result) => put(actions.authenticateUserSuccess(result)))
+    .then((result) =>
+      put(actions.authenticateUserSuccess({ result, navigation })),
+    )
     .catch((error) => put(actions.authenticateUserFailed(error)));
 
 function* loginWithEmailPassword({ payload }) {
   try {
-    const result = yield call(loginWithEmailPasswordAsync, {
-      email: payload.email,
-      password: payload.password,
-    });
+    const result = yield call(loginWithEmailPasswordAsync, payload);
     yield result;
   } catch (error) {
     yield put(actions.authenticateUserFailed(error));

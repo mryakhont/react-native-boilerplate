@@ -1,13 +1,14 @@
 import { createContext, useContext } from 'react';
-import { PlanningStatus } from 'Model/applicationContext/contactStatus';
+import { getAuthenticationToken } from 'Store/local.store';
 
-export let ContactContext = {
-    contactStatus: PlanningStatus.CANCELLED
-}
+export let ContactContext = { authenticated: false, token: '' };
 
-export const ContactContextAccessor = createContext();
+export const ContactContextAccessor = createContext(ContactContext);
 
 export function useContactContext() {
-
-    return useContext(ContactContextAccessor);
+  getAuthenticationToken().then((token) => {
+    ContactContext.authenticated = token != null;
+    ContactContext.token = token;
+  });
+  return useContext(ContactContextAccessor);
 }
