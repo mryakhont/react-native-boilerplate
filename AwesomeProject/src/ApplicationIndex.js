@@ -4,15 +4,18 @@ import ApplicationNavigationContainer from 'Routes/ApplicationNavigationContaine
 import ApplicationContext from 'Runtime/context/ApplicationContext';
 import { configureStore } from 'Store/store';
 import { initFetchRequestInterceptor } from 'Runtime/request/applicationInterceptors';
+import ErrorBoundary from 'Components/ErrorBoundary';
 
 const store = configureStore();
-initFetchRequestInterceptor();
+initFetchRequestInterceptor(store);
 
 export default function ApplicationIndex() {
   return (
     <Provider store={store}>
       <ApplicationContext>
-        <ApplicationNavigationContainer />
+        <ErrorBoundary>
+          <ApplicationNavigationContainer />
+        </ErrorBoundary>
       </ApplicationContext>
     </Provider>
   );

@@ -5,7 +5,7 @@ const attachment = requestInterceptor(ENVIRONMENT_IS_WORKER ? self : window);
 
 let requestHeaderConfiguration = {};
 
-export function initFetchRequestInterceptor() {
+export function initFetchRequestInterceptor({ dispatch }) {
   attachment.register({
     request: (url, config) => {
       console.log(url, config);
@@ -19,6 +19,9 @@ export function initFetchRequestInterceptor() {
     },
     response: (result) => {
       console.log(result);
+      if (result.response === 200 && result.ok === true) {
+        
+      }
       return result;
     },
     responseError: (error) => {
