@@ -18,6 +18,9 @@ export default (state = INIT_STATE, action) => {
     case actions.AUTHENTICATE_USER_FAILED:
       return { ...state };
 
+    case actions.LOG_OUT:
+      return { ...state, authenticated: false };
+
     default:
       return state;
   }

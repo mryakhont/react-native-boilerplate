@@ -1,4 +1,5 @@
 import requestInterceptor from 'Runtime/request/requestInterceptor';
+import { logOut } from 'Store/login/actions';
 
 const ENVIRONMENT_IS_WORKER = typeof importScripts === 'function';
 const attachment = requestInterceptor(ENVIRONMENT_IS_WORKER ? self : window);
@@ -19,8 +20,8 @@ export function initFetchRequestInterceptor({ dispatch }) {
     },
     response: (result) => {
       console.log(result);
-      if (result.response === 200 && result.ok === true) {
-        
+      if (result.status === 401 && result.ok === false) {
+        dispatch(logOut());
       }
       return result;
     },

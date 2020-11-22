@@ -15,7 +15,10 @@ function ApplicationContext(props) {
   React.useEffect(() => {
     const getToken = async () => {
       const token = await getAuthenticationToken();
-      setContactContext({ token: token, authenticated: token != null });
+      setContactContext({
+        token: token,
+        authenticated: token != null && props.authenticated,
+      });
     };
     getToken();
   }, [props.authenticated]);
