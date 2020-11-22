@@ -3,8 +3,26 @@ import requestInterceptor from 'Runtime/request/requestInterceptor';
 const ENVIRONMENT_IS_WORKER = typeof importScripts === 'function';
 const attachment = requestInterceptor(ENVIRONMENT_IS_WORKER ? self : window);
 
-attachment.register({
-  request: () => console.log('request'),
-  response: (result) => console.log('response', result),
-  responseError: (error) => console.log('responseError', error),
-});
+let requestHeaderConfiguration = {};
+
+export function initFetchRequestInterceptor() {
+  attachment.register({
+    request: (url, config) => {
+      console.log(url, config);
+      const currentHeader = config.headers;
+      config.headers = Object.assign(
+        currentHeader != null ? currentHeader : {},
+        requestHeaderConfiguration,
+      );
+
+      return [url, config];
+    },
+    response: (result) => {
+      console.log(result);
+      return result;
+    },
+    responseError: (error) => {
+      return error;
+    },
+  });
+}
