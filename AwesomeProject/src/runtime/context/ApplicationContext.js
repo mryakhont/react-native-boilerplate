@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createContext, useContext } from 'react';
+import { connect } from 'react-redux';
 import { getAuthenticationToken } from 'Store/local.store';
 
 const InitContactContext = { authenticated: false, token: '' };
@@ -9,7 +10,7 @@ export function useContactContext() {
   return useContext(ContactContextAccessor);
 }
 
-export default function ApplicationContext(props) {
+function ApplicationContext(props) {
   const [contactContext, setContactContext] = useState(InitContactContext);
   React.useEffect(() => {
     const getToken = async () => {
@@ -17,7 +18,7 @@ export default function ApplicationContext(props) {
       setContactContext({ token: token, authenticated: token != null });
     };
     getToken();
-  }, []);
+  }, [props.authenticated]);
 
   return (
     <ContactContextAccessor.Provider value={contactContext}>
@@ -25,3 +26,11 @@ export default function ApplicationContext(props) {
     </ContactContextAccessor.Provider>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.login.authenticated,
+  };
+};
+
+export default connect(mapStateToProps, null)(ApplicationContext);

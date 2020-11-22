@@ -8,7 +8,7 @@ export const getItem = async (key) => {
   return await AsyncStorage.getItem(key);
 };
 
-const AuthenticationTokenKey = 'authentication_token';
+const AuthenticationTokenKey = 'authentication_token3';
 export const setAuthenticationToken = (token) => {
   setItem(AuthenticationTokenKey, token);
 };

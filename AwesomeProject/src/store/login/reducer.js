@@ -7,7 +7,6 @@ const INIT_STATE = {
 };
 
 export default (state = INIT_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case actions.AUTHENTICATE_USER:
       return { ...state };
