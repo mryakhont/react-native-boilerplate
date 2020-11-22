@@ -8,7 +8,7 @@ function interceptor(fetch, ...args) {
   let promise = Promise.resolve(args);
 
   // Register request interceptors
-  reversedInterceptors.forEach(({request, requestError}) => {
+  reversedInterceptors.forEach(({ request, requestError }) => {
     if (request || requestError) {
       promise = promise.then((args) => request(...args), requestError);
     }
@@ -18,7 +18,7 @@ function interceptor(fetch, ...args) {
   promise = promise.then((args) => fetch(...args));
 
   // Register response interceptors
-  reversedInterceptors.forEach(({response, responseError}) => {
+  reversedInterceptors.forEach(({ response, responseError }) => {
     if (response || responseError) {
       promise = promise.then(response, responseError);
     }
@@ -43,8 +43,8 @@ export default function attach(env) {
   })(env.fetch);
 
   return {
-    register: function ({request, response, responseError}) {
-      const interceptor = {request, response, responseError};
+    register: function ({ request, response, responseError }) {
+      const interceptor = { request, response, responseError };
       interceptors.push(interceptor);
       return () => {
         const index = interceptors.indexOf(interceptor);

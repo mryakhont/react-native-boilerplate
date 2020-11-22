@@ -4,15 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AuthenticatedRoutes } from 'Routes/settings/Authenticated.Routes';
 import { PublicRoutes } from 'Routes/settings/Public.Routes';
-import { readyForNavigation, navigationRef } from 'Routes/ExternalNavigation';
-import { useContactContext } from 'Runtime/context/contactContext';
+import { useContactContext } from 'Runtime/context/ApplicationContext';
 const Stack = createStackNavigator();
 
-const ApplicationNavigationContainer = () => {
-  const authenticatedRoutes = AuthenticatedRoutes;
-  const publicRoutes = PublicRoutes;
+function ApplicationNavigationContainer() {
+  const [initialRouteName, setInitRouteName] = React.useState('Login');
 
-  const contactContext = useContactContext();
+  const context = useContactContext();
+
+  React.useEffect(() => {
+    setInitRouteName(context.authenticated === true ? 'Home' : 'Login');
+  }, [context.authenticated]);
 
   const generateRoutes = (routes) =>
     routes.map((r) => {
@@ -28,21 +30,14 @@ const ApplicationNavigationContainer = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName={
-          publicRoutes.find((r) => r.options.initialRoute === true).name
-        }>
-        {contactContext.authenticated !== true
+      <Stack.Navigator initialRouteName={initialRouteName}>
+        {context.authenticated !== true
           ? false
-          : generateRoutes(authenticatedRoutes)}
-        {contactContext.authenticated === true
-          ? false
-          : generateRoutes(publicRoutes)}
+          : generateRoutes(AuthenticatedRoutes)}
+        {generateRoutes(PublicRoutes)}
       </Stack.Navigator>
     </NavigationContainer>
   );
-};
-
-const mapStateToProps = {};
+}
 
 export default ApplicationNavigationContainer;

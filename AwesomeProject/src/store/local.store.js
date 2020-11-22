@@ -15,7 +15,7 @@ export const setAuthenticationToken = (token) => {
 
 export const getAuthenticationToken = async () => {
   try {
-    const value = await AsyncStorage.getItem('AuthenticationTokenKey');
+    const value = await AsyncStorage.getItem(AuthenticationTokenKey);
     return value;
   } catch (error) {
     return '';

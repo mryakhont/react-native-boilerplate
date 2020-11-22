@@ -21,6 +21,7 @@ export function configureStore(initialState) {
     // @ts-ignore
     module.hot.accept('./index.reducers', () => {
       const nextRootReducer = require('./index.reducers');
+      // @ts-ignore
       store.replaceReducer(nextRootReducer);
     });
   }

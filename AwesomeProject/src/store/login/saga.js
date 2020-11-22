@@ -6,11 +6,9 @@ export function* watchLoginUser() {
   yield takeLatest(actions.AUTHENTICATE_USER, loginWithEmailPassword);
 }
 
-const loginWithEmailPasswordAsync = async ({ email, password, navigation }) =>
+const loginWithEmailPasswordAsync = async ({ email, password }) =>
   await post('api/users/authenticate', { email: email, password: password })
-    .then((result) =>
-      put(actions.authenticateUserSuccess({ result, navigation })),
-    )
+    .then((result) => put(actions.authenticateUserSuccess(result)))
     .catch((error) => put(actions.authenticateUserFailed(error)));
 
 function* loginWithEmailPassword({ payload }) {

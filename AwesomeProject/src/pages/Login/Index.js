@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Linking,
@@ -8,11 +8,19 @@ import {
   Text,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { useContactContext } from 'Runtime/context/ApplicationContext';
 import { authenticateUser } from 'Store/login/actions';
 
 function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const context = useContactContext();
+  useEffect(() => {
+    if (context.authenticated === true) {
+      props.navigation.navigate('Home');
+    }
+  }, [context.authenticated, props.navigation]);
 
   return (
     <View>
@@ -32,7 +40,6 @@ function Login(props) {
           props.authenticateUserAction({
             email,
             password,
-            navigation: props.navigation,
           });
         }}
       />
@@ -43,8 +50,14 @@ function Login(props) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    authenticated: state.login.authenticated,
+  };
+};
+
 const mapDispatchToProps = {
   authenticateUserAction: authenticateUser,
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
