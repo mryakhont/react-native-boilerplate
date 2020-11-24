@@ -4,5 +4,5 @@ A sample react native with some pretty techniques:
 - Fetch Api interceptor
  
 
-# build apk guideline
+### build apk guideline
 https://github.com/mryakhont/react-native-boilerplate/wiki/Build-apk-guideline
