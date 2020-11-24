@@ -1,6 +1,6 @@
 import { changeUrlParam } from 'Utils/object-utilities';
 
-const ROOT_REQUEST = 'https://e8e6f2069f64.ngrok.io/';
+const ROOT_REQUEST = 'https://f8a61a8e1e66.ngrok.io/';
 
 export async function get(url, data = undefined) {
   if (data !== undefined) {
